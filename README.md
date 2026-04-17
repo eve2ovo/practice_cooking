@@ -1,5 +1,6 @@
 # AI Cook
-
+（其实是为了解决本人炒菜需要去拿手机看步骤的痛点，满足每个步骤倒计时+语音提醒）
+以下由ChatGPT生成：
 AI Cook Companion is a uni-app cooking assistant with:
 
 - a `uni-app` frontend for H5 and WeChat Mini Program
@@ -82,7 +83,4 @@ Before the first deploy in Render:
 4. Redeploy the frontend after setting `VITE_SERVER_BASE_URL`.
 
 ## Notes
-
-- Do not commit `server/.env`
-- The Dify API key should stay server-side only
 - If you change the Dify workflow, remember to publish the workflow before testing through the backend API
