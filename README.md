@@ -67,6 +67,20 @@ npm run build:mp-weixin
 
 For production, update the frontend `serverBaseUrl` to your public backend URL.
 
+## Render Deployment
+
+This repo includes a root `render.yaml` so you can create both services from Render Blueprint:
+
+- `ai-cook-backend`: Express API from `server/`
+- `ai-cook-frontend`: static H5 site from `dist/build/h5/`
+
+Before the first deploy in Render:
+
+1. Create services from the Blueprint in this repo.
+2. Set `DIFY_API_KEY` on the backend service.
+3. Set `VITE_SERVER_BASE_URL` on the frontend service to your backend public URL, such as `https://ai-cook-backend.onrender.com`.
+4. Redeploy the frontend after setting `VITE_SERVER_BASE_URL`.
+
 ## Notes
 
 - Do not commit `server/.env`

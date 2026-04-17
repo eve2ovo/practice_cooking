@@ -1,4 +1,13 @@
-﻿function resolveServerBaseUrl() {
+const configuredServerBaseUrl =
+  typeof import.meta !== 'undefined' && import.meta.env?.VITE_SERVER_BASE_URL
+    ? String(import.meta.env.VITE_SERVER_BASE_URL).trim()
+    : ''
+
+function resolveServerBaseUrl() {
+  if (configuredServerBaseUrl) {
+    return configuredServerBaseUrl.replace(/\/+$/, '')
+  }
+
   if (typeof window === 'undefined') {
     return 'http://localhost:3000'
   }
@@ -10,7 +19,7 @@
     return 'http://localhost:3000'
   }
 
-  // 非本地环境优先走同源后端，方便用反向代理一起部署。
+  // Non-local deployments can point to the same origin backend by default.
   if (protocol === 'http:' || protocol === 'https:') {
     return origin
   }
@@ -19,10 +28,8 @@
 }
 
 export const WORKFLOW_CONFIG = {
-  // 如果你的后端是单独域名，把这里改成真实后端地址即可。
   serverBaseUrl: resolveServerBaseUrl(),
   generatePath: '/api/recipe/generate',
   healthPath: '/api/recipe/health',
-  // 接入真实后端后，默认不要静默回退到 mock，方便直接暴露问题。
   useMockWhenOffline: false
 }

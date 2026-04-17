@@ -1,0 +1,33 @@
+services:
+  - type: web
+    runtime: node
+    name: ai-cook-backend
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: DIFY_BASE_URL
+        value: https://api.dify.ai/v1
+      - key: DIFY_OUTPUT_KEY
+        value: result
+      - key: DIFY_USER_PREFIX
+        value: ai-cook
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: DIFY_API_KEY
+        sync: false
+
+  - type: web
+    runtime: static
+    name: ai-cook-frontend
+    plan: free
+    buildCommand: npm install && npm run build:h5
+    staticPublishPath: dist/build/h5
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: VITE_SERVER_BASE_URL
+        sync: false
