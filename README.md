@@ -1,4 +1,4 @@
-# AI Cook Companion
+# AI Cook
 
 AI Cook Companion is a uni-app cooking assistant with:
 
