@@ -22,7 +22,6 @@ services:
   - type: web
     runtime: static
     name: ai-cook-frontend
-    plan: free
     buildCommand: npm install && npm run build:h5
     staticPublishPath: dist/build/h5
     envVars:
