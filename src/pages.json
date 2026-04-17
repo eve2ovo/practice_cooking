@@ -1,0 +1,37 @@
+﻿{
+  "easycom": {
+    "autoscan": true
+  },
+  "globalStyle": {
+    "navigationBarTitleText": "AI做饭陪练",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FCE7A7",
+    "backgroundColor": "#FFF9EE"
+  },
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "AI做饭陪练"
+      }
+    },
+    {
+      "path": "pages/result/index",
+      "style": {
+        "navigationBarTitleText": "AI做饭陪练"
+      }
+    },
+    {
+      "path": "pages/cooking/index",
+      "style": {
+        "navigationBarTitleText": "开始烹饪"
+      }
+    },
+    {
+      "path": "pages/finish/index",
+      "style": {
+        "navigationBarTitleText": "烹饪结束~"
+      }
+    }
+  ]
+}

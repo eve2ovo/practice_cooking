@@ -1,0 +1,116 @@
+$theme-primary: #efb94d;
+$theme-primary-deep: #da9d27;
+$theme-accent: #f8d970;
+$theme-bg: #fff9ee;
+$theme-card: rgba(255, 255, 255, 0.88);
+$theme-text: #5b4424;
+$theme-subtext: #8d734b;
+$theme-border: rgba(239, 185, 77, 0.2);
+$theme-success: #75a843;
+$theme-warning: #df8d28;
+$theme-danger: #d96643;
+
+.page-shell {
+  min-height: 100vh;
+  padding: 28rpx;
+}
+
+.hero-card,
+.panel-card {
+  background: $theme-card;
+  border: 1px solid $theme-border;
+  border-radius: 28rpx;
+  box-shadow: 0 14rpx 42rpx rgba(189, 144, 51, 0.08);
+}
+
+.primary-btn,
+.secondary-btn,
+.ghost-btn {
+  height: 88rpx;
+  border-radius: 22rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.primary-btn {
+  color: #ffffff;
+  background: linear-gradient(135deg, $theme-primary, $theme-primary-deep);
+  box-shadow: 0 14rpx 30rpx rgba(218, 157, 39, 0.22);
+}
+
+.secondary-btn {
+  color: $theme-text;
+  background: rgba(252, 231, 167, 0.55);
+}
+
+.ghost-btn {
+  color: $theme-primary-deep;
+  background: transparent;
+  border: 2rpx solid rgba(218, 157, 39, 0.28);
+}
+
+.section-title {
+  margin-bottom: 20rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: $theme-text;
+}
+
+.label-text {
+  margin-bottom: 14rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: $theme-text;
+}
+
+.hint-text {
+  font-size: 24rpx;
+  line-height: 1.5;
+  color: $theme-subtext;
+}
+
+.field-input,
+.field-textarea {
+  width: 100%;
+  padding: 22rpx 24rpx;
+  border: 2rpx solid rgba(239, 185, 77, 0.2);
+  border-radius: 20rpx;
+  background: rgba(255, 250, 240, 0.96);
+  font-size: 28rpx;
+  color: $theme-text;
+}
+
+.field-textarea {
+  min-height: 180rpx;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.chip-btn {
+  padding: 16rpx 24rpx;
+  border-radius: 999rpx;
+  background: rgba(252, 231, 167, 0.44);
+  color: $theme-subtext;
+  font-size: 26rpx;
+}
+
+.chip-btn.is-active {
+  background: linear-gradient(135deg, #f7cf5b, #efb94d);
+  color: #ffffff;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(239, 185, 77, 0.14);
+  color: $theme-primary-deep;
+  font-size: 22rpx;
+  font-weight: 600;
+}

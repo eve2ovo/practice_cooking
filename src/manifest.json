@@ -1,0 +1,15 @@
+{
+  "name": "AI做饭陪练",
+  "appid": "__UNI__AICOOKTRAINER",
+  "description": "根据用户自定义 AI 工作流生成结构化菜谱，并在做菜时进行时间轴陪练提醒。",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false
+    },
+    "usingComponents": true
+  }
+}
