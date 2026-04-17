@@ -3,7 +3,6 @@ services:
     runtime: node
     name: ai-cook-backend
     rootDir: server
-    plan: free
     buildCommand: npm install
     startCommand: npm start
     envVars:
