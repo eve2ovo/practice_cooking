@@ -1,7 +1,7 @@
 ﻿import { defineStore } from 'pinia'
 import { STORAGE_KEYS } from '@/constants/storageKeys'
 import { getStorage, setStorage } from '@/utils/storage'
-import { speakText, stopSpeak } from '@/utils/speech'
+import { pauseSpeak, replaySpeak, resumeSpeak, speakText, stopSpeak } from '@/utils/speech'
 
 let timer = null
 
@@ -37,6 +37,11 @@ function getRecipeSessionId(recipe) {
 
 function getStepDuration(step) {
   return Number(step?.duration) || 0
+}
+
+function startTimer(store, recipe) {
+  stopTimer()
+  timer = setInterval(() => store.tick(recipe), 1000)
 }
 
 export const useCookingStore = defineStore('cooking', {
@@ -83,15 +88,14 @@ export const useCookingStore = defineStore('cooking', {
       this.persistSession()
     },
     start(recipe) {
+      if (this.session.recipeId !== getRecipeSessionId(recipe)) this.init(recipe)
       const current = this.getCurrentStep(recipe)
       if (!current) return
-      if (this.session.recipeId !== getRecipeSessionId(recipe)) this.init(recipe)
-      stopTimer()
       this.session.status = 'running'
       this.session.startedAt = this.session.startedAt || new Date().toISOString()
       this.persistSession()
       speakText(current.voiceText || current.instruction, this.session.speechEnabled)
-      timer = setInterval(() => this.tick(recipe), 1000)
+      startTimer(this, recipe)
     },
     tick(recipe) {
       if (this.session.status !== 'running') return
@@ -106,10 +110,18 @@ export const useCookingStore = defineStore('cooking', {
       this.session.status = 'paused'
       stopTimer()
       this.persistSession()
-      stopSpeak()
+      if (!pauseSpeak()) {
+        stopSpeak({ resetText: false })
+      }
     },
     resume(recipe) {
-      if (recipe?.timelineSteps?.length) this.start(recipe)
+      const current = this.getCurrentStep(recipe)
+      if (!current) return
+      this.session.status = 'running'
+      this.session.startedAt = this.session.startedAt || new Date().toISOString()
+      this.persistSession()
+      resumeSpeak(this.session.speechEnabled)
+      startTimer(this, recipe)
     },
     replayCurrent(recipe) {
       const current = this.getCurrentStep(recipe)
@@ -136,13 +148,18 @@ export const useCookingStore = defineStore('cooking', {
       this.session.status = auto ? 'running' : 'paused'
       this.persistSession()
       if (auto) {
-        this.resume(recipe)
+        this.start(recipe)
         return
       }
       this.replayCurrent(recipe)
     },
     toggleSpeech() {
       this.session.speechEnabled = !this.session.speechEnabled
+      if (!this.session.speechEnabled) {
+        stopSpeak({ resetText: false })
+      } else if (this.session.status === 'running') {
+        replaySpeak(true)
+      }
       this.persistSession()
     },
     complete(recipe) {
