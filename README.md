@@ -1,6 +1,8 @@
 # AI Cook
 - （其实是为了解决本人炒菜需要去拿手机看步骤的痛点，满足每个步骤倒计时+语音提醒）
 - 已部署好地址：https://practice-cooking.onrender.com
+- text文件夹里为workflow中知识库内容，可再补充
+- workflow具体内容可导入dify查看~
 - 以下由ChatGPT生成：
 AI Cook Companion is a uni-app cooking assistant with:
 
