@@ -1,0 +1,604 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: cook
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.12@37699cc3d1ea9e006348a7273a514f3ddf60ffb0649dc735c594c8da6a80934b
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1776348730757-source-1776348744357-target
+      selected: false
+      source: '1776348730757'
+      sourceHandle: source
+      target: '1776348744357'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1776348750706-source-1776348756274-target
+      selected: false
+      source: '1776348750706'
+      sourceHandle: source
+      target: '1776348756274'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: knowledge-retrieval
+      id: 1776348744357-source-1776349794057-target
+      selected: false
+      source: '1776348744357'
+      sourceHandle: source
+      target: '1776349794057'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: template-transform
+      id: 1776349794057-source-1776348750706-target
+      selected: false
+      source: '1776349794057'
+      sourceHandle: source
+      target: '1776348750706'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1776348756274-source-1776349826718-target
+      selected: false
+      source: '1776348756274'
+      sourceHandle: source
+      target: '1776349826718'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1776349826718-source-1776417376042-target
+      source: '1776349826718'
+      sourceHandle: source
+      target: '1776417376042'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1776417376042-source-1776348760142-target
+      source: '1776417376042'
+      sourceHandle: source
+      target: '1776348760142'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: dishName
+          max_length: 10
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: dishName
+        - default: '2'
+          hint: ''
+          label: servings
+          max_length: 10
+          options: []
+          placeholder: ''
+          required: true
+          type: number
+          variable: servings
+        - hint: ''
+          label: taste
+          max_length: 10
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: taste
+        - default: ''
+          hint: ''
+          label: availableIngredients
+          max_length: 100
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: availableIngredients
+      height: 187
+      id: '1776348730757'
+      position:
+        x: -392.21330973527193
+        y: 377.76850804812153
+      positionAbsolute:
+        x: -392.21330973527193
+        y: 377.76850804812153
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(dishName, servings, taste, availableIngredients):\n    import\
+          \ re\n\n    # 1. 菜名清洗\n    normalized_dish_name = (dishName or \"\").strip()\n\
+          \n    # 2. 人数清洗\n    try:\n        normalized_servings = int(round(float(servings)))\n\
+          \    except:\n        normalized_servings = 2\n    if normalized_servings\
+          \ < 1:\n        normalized_servings = 1\n\n    # 3. 口味清洗\n    normalized_taste\
+          \ = (taste or \"\").strip()\n    if not normalized_taste:\n        normalized_taste\
+          \ = \"家常\"\n\n    # 4. 食材拆分\n    raw_ingredients = (availableIngredients\
+          \ or \"\").strip()\n    if raw_ingredients:\n        ingredient_list = [\n\
+          \            item.strip() for item in re.split(r\"[,，、;；\\n]+\", raw_ingredients)\n\
+          \            if item.strip()\n        ]\n    else:\n        ingredient_list\
+          \ = []\n\n    ingredient_text = \"、\".join(ingredient_list) if ingredient_list\
+          \ else \"无明确现有食材\"\n\n    # 5. 检索查询词\n    retrieval_query = f\"{normalized_dish_name}\
+          \ {normalized_taste} 做法 食材 配比 火候 时间\"\n\n    return {\n        \"normalizedDishName\"\
+          : normalized_dish_name,\n        \"normalizedServings\": normalized_servings,\n\
+          \        \"normalizedTaste\": normalized_taste,\n        \"ingredientList\"\
+          : ingredient_list,\n        \"ingredientText\": ingredient_text,\n     \
+          \   \"retrievalQuery\": retrieval_query\n    }"
+        code_language: python3
+        outputs:
+          ingredientList:
+            children: null
+            type: array[string]
+          ingredientText:
+            children: null
+            type: string
+          normalizedDishName:
+            children: null
+            type: string
+          normalizedServings:
+            children: null
+            type: number
+          normalizedTaste:
+            children: null
+            type: string
+          retrievalQuery:
+            children: null
+            type: string
+        selected: false
+        title: Question Classifier / Code
+        type: code
+        variables:
+        - value_selector:
+          - '1776348730757'
+          - dishName
+          value_type: string
+          variable: dishName
+        - value_selector:
+          - '1776348730757'
+          - servings
+          value_type: string
+          variable: servings
+        - value_selector:
+          - '1776348730757'
+          - taste
+          value_type: string
+          variable: taste
+        - value_selector:
+          - '1776348730757'
+          - availableIngredients
+          value_type: string
+          variable: availableIngredients
+      height: 52
+      id: '1776348744357'
+      position:
+        x: -131.1045625359173
+        y: 273.90049594767135
+      positionAbsolute:
+        x: -131.1045625359173
+        y: 273.90049594767135
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        template: "用户需求：\r\n- 菜名：{{ normalizedDishName }}\r\n- 人数：{{ normalizedServings\
+          \ }}\r\n- 口味：{{ normalizedTaste }}\r\n- 现有食材：{{ ingredientText }}\r\n\r\n\
+          检索到的菜谱依据：\r\n{% for item in result %}\r\n【资料{{ loop.index }}】\r\n标题：{{ item.title\
+          \ }}\r\n内容：{{ item.content }}\r\n\r\n{% endfor %}\r\n\r\n任务要求：\r\n- 生成一份适合当前人数和口味的中文结构化菜谱\r\
+          \n- 优先使用用户现有食材\r\n- 缺少食材时允许补充常见必需食材\r\n- 步骤必须可执行，时间和火候必须合理\r\n- 输出必须严格符合\
+          \ JSON 结构\r\n- 结果要适配前端倒计时和语音播报功能"
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1776348744357'
+          - ingredientText
+          value_type: string
+          variable: ingredientText
+        - value_selector:
+          - '1776348744357'
+          - normalizedDishName
+          value_type: string
+          variable: normalizedDishName
+        - value_selector:
+          - '1776348744357'
+          - normalizedServings
+          value_type: number
+          variable: normalizedServings
+        - value_selector:
+          - '1776348744357'
+          - normalizedTaste
+          value_type: string
+          variable: normalizedTaste
+        - value_selector:
+          - '1776349794057'
+          - result
+          value_type: array[object]
+          variable: result
+      height: 52
+      id: '1776348750706'
+      position:
+        x: -111.43371849628646
+        y: 552.0104180160014
+      positionAbsolute:
+        x: -111.43371849628646
+        y: 552.0104180160014
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1776348750706'
+          - output
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 7ee017ee-5701-467a-aeed-288ac01335fb
+          role: system
+          text: '你是一名严谨的中式家常菜教练和结构化菜谱生成器。
+
+
+            你的任务不是自由发挥，而是基于提供的菜谱依据和烹饪规则，生成一份适合用户需求的结构化菜谱。
+
+
+            你必须遵守以下要求：
+
+
+            1. 优先依据检索到的做法、配比、火候、时间来生成。
+
+            2. 如果知识里有明确做法，不能随意偏离。
+
+            3. 如果知识不完整，只能做最小幅度的合理补全，不能编造夸张食材或专业术语。
+
+            4. 输出必须是纯 JSON，不要输出 Markdown，不要输出解释，不要输出代码块。
+
+            5. 所有字段都必须存在。
+
+            6. timelineSteps 至少 4 步，通常 5 到 8 步。
+
+            7. 每个步骤必须是用户真能执行的动作，不能写空话。
+
+            8. 步骤里的 duration 用秒，必须是合理值。
+
+            9. heatLevel 只能是 HIGH、MEDIUM、LOW、OFF。
+
+            10. type 只能是 auto、wait、confirm。
+
+            11. difficulty 只能是 EASY、MEDIUM、HARD。
+
+            12. servingSize 必须等于用户人数。
+
+            13. ingredients 里的 amount 必须是人类可理解的描述，如“2个”“300克”“适量”。
+
+            14. voiceText 要比 instruction 更适合语音播报，短一些、更口语化。
+
+            15. 不要输出空数组，正常情况下 ingredients、prepTips、timelineSteps 不能为空。
+
+            16. totalDuration 必须等于或接近所有 timelineSteps.duration 之和。
+
+            17. timeOffset 必须从 0 开始递增。
+
+            18. needUserConfirm 为 true 时，type 必须是 confirm。
+
+            19. dishName 必须严格等于用户输入的菜名，不能改写成其他菜名。
+
+            20. 无论检索结果是否充分，都不能把用户要求的菜换成其他菜。
+
+            21. 如果用户输入的是“土豆炖牛肉”，输出就必须是“土豆炖牛肉”的做法。
+
+            22. 如果检索知识不完整，只能围绕用户指定菜名进行最小补全。
+
+            23. 当用户菜名包含“炖、煲、焖”时，优先使用长时加热的炖菜逻辑，不能输出快炒类菜谱。
+
+            19. 语音播报适合移动端用户听，不要太书面。
+
+            20. 输出只允许是一个合法 JSON 对象。'
+        - id: a45a78ac-c657-46f0-9a1c-b537f4306fca
+          role: user
+          text: "请基于提供的上下文生成结构化菜谱。\n{{#1776348750706.output#}}\n请严格遵守以下规则：\n1. dishName\
+            \ 必须严格等于用户输入的菜名，不能改成其他菜。\n2. 如果用户输入是“土豆炖牛肉”，输出必须是“土豆炖牛肉”的做法。\n3. 即使知识不足，也只能围绕该菜名做最小幅度合理补全，禁止换成青椒肉丝、番茄炒蛋或任何其他菜。\n\
+            4. 如果检索内容里出现与目标菜名无关的片段，优先服从用户输入菜名。\n5. 输出必须是纯 JSON，不要输出解释，不要输出 markdown。\n\
+            \nJSON 结构必须为：\n{\n  \"dishName\": \"string\",\n  \"description\": \"string\"\
+            ,\n  \"servingSize\": 2,\n  \"difficulty\": \"EASY|MEDIUM|HARD\",\n  \"\
+            totalDuration\": 0,\n  \"ingredients\": [\n    { \"name\": \"string\"\
+            , \"amount\": \"string\" }\n  ],\n  \"prepTips\": [\"string\"],\n  \"\
+            timelineSteps\": [\n    {\n      \"stepNo\": 1,\n      \"type\": \"auto|wait|confirm\"\
+            ,\n      \"title\": \"string\",\n      \"instruction\": \"string\",\n\
+            \      \"voiceText\": \"string\",\n      \"timeOffset\": 0,\n      \"\
+            duration\": 0,\n      \"heatLevel\": \"HIGH|MEDIUM|LOW|OFF\",\n      \"\
+            needUserConfirm\": false\n    }\n  ]\n}\n\n额外要求：\n- servingSize 必须等于用户人数\n\
+            - ingredients 至少 3 项\n- prepTips 写 2 到 4 条\n- timelineSteps 至少 4 步\n-\
+            \ 炖菜总时长通常应明显长于快炒菜\n- 如果菜名包含“炖”，步骤中应体现焯水/炖煮/后加土豆/收汁等炖菜逻辑\n"
+        selected: false
+        structured_output_enabled: false
+        title: generate_recipe_json
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1776348756274'
+      position:
+        x: -59.104561602689145
+        y: 664.1695626375981
+      positionAbsolute:
+        x: -59.104561602689145
+        y: 664.1695626375981
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1776417376042'
+          - result_json
+          value_type: object
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 88
+      id: '1776348760142'
+      position:
+        x: 274.0717394265064
+        y: 547.152006755022
+      positionAbsolute:
+        x: 274.0717394265064
+        y: 547.152006755022
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - IJA31Zaq8xbbAMax+T7yumd7eHx/Tu6yfQWhwq+MoCYDVW3hSblL9K+f7ATDxFRt
+        metadata_filtering_mode: disabled
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          top_k: 4
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1776348744357'
+        - retrievalQuery
+        retrieval_mode: multiple
+        selected: false
+        title: Knowledge Retrieva
+        type: knowledge-retrieval
+      height: 90
+      id: '1776349794057'
+      position:
+        x: -96.4337183018639
+        y: 387.7963631050058
+      positionAbsolute:
+        x: -96.4337183018639
+        y: 387.7963631050058
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(text, normalizedServings):\n    import json\n\n    # 解析 JSON\n\
+          \    try:\n        data = json.loads(text)\n    except:\n        data =\
+          \ {\n            \"dishName\": \"\",\n            \"description\": \"生成失败，请重试\"\
+          ,\n            \"servingSize\": int(normalizedServings) if normalizedServings\
+          \ else 2,\n            \"difficulty\": \"EASY\",\n            \"totalDuration\"\
+          : 0,\n            \"ingredients\": [],\n            \"prepTips\": [],\n\
+          \            \"timelineSteps\": []\n        }\n\n    # 保底字段\n    data.setdefault(\"\
+          dishName\", \"\")\n    data.setdefault(\"description\", \"\")\n    data[\"\
+          servingSize\"] = int(normalizedServings) if normalizedServings else data.get(\"\
+          servingSize\", 2)\n    data.setdefault(\"difficulty\", \"EASY\")\n    data.setdefault(\"\
+          ingredients\", [])\n    data.setdefault(\"prepTips\", [])\n    data.setdefault(\"\
+          timelineSteps\", [])\n\n    # difficulty 校正\n    if data[\"difficulty\"\
+          ] not in [\"EASY\", \"MEDIUM\", \"HARD\"]:\n        data[\"difficulty\"\
+          ] = \"EASY\"\n\n    # timelineSteps 修复\n    fixed_steps = []\n    offset\
+          \ = 0\n\n    for i, step in enumerate(data[\"timelineSteps\"], start=1):\n\
+          \        if not isinstance(step, dict):\n            continue\n\n      \
+          \  title = step.get(\"title\", f\"步骤{i}\")\n        instruction = step.get(\"\
+          instruction\", \"\")\n        voice_text = step.get(\"voiceText\") or instruction\n\
+          \        step_type = step.get(\"type\", \"auto\")\n        heat_level =\
+          \ step.get(\"heatLevel\", \"OFF\")\n        need_confirm = bool(step.get(\"\
+          needUserConfirm\", False))\n\n        try:\n            duration = int(step.get(\"\
+          duration\", 0))\n        except:\n            duration = 0\n\n        if\
+          \ duration < 0:\n            duration = 0\n\n        # 默认时长补齐\n        if\
+          \ duration == 0:\n            if \"准备\" in title or \"切\" in instruction\
+          \ or \"备料\" in title:\n                duration = 180\n            elif\
+          \ \"热锅\" in title or \"下油\" in instruction:\n                duration =\
+          \ 30\n            elif \"翻炒\" in title or \"炒\" in instruction:\n      \
+          \          duration = 120\n            elif \"收汁\" in title:\n         \
+          \       duration = 90\n            elif \"装盘\" in title or \"出锅\" in instruction:\n\
+          \                duration = 45\n            else:\n                duration\
+          \ = 60\n\n        # type / confirm 对齐\n        if need_confirm and step_type\
+          \ != \"confirm\":\n            step_type = \"confirm\"\n\n        if step_type\
+          \ not in [\"auto\", \"wait\", \"confirm\"]:\n            step_type = \"\
+          auto\"\n\n        if heat_level not in [\"HIGH\", \"MEDIUM\", \"LOW\", \"\
+          OFF\"]:\n            heat_level = \"OFF\"\n\n        fixed_steps.append({\n\
+          \            \"stepNo\": i,\n            \"type\": step_type,\n        \
+          \    \"title\": title,\n            \"instruction\": instruction,\n    \
+          \        \"voiceText\": voice_text,\n            \"timeOffset\": offset,\n\
+          \            \"duration\": duration,\n            \"heatLevel\": heat_level,\n\
+          \            \"needUserConfirm\": need_confirm\n        })\n\n        offset\
+          \ += duration\n\n    data[\"timelineSteps\"] = fixed_steps\n    data[\"\
+          totalDuration\"] = sum(step[\"duration\"] for step in fixed_steps)\n\n \
+          \   return {\n        \"structured_result\": data\n    }"
+        code_language: python3
+        outputs:
+          structured_result:
+            children: null
+            type: object
+        selected: false
+        title: repair_recipe_json
+        type: code
+        variables:
+        - value_selector:
+          - '1776348756274'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - '1776348744357'
+          - normalizedServings
+          value_type: number
+          variable: normalizedServings
+      height: 52
+      id: '1776349826718'
+      position:
+        x: 290.0717396338904
+        y: 263.1695589435702
+      positionAbsolute:
+        x: 290.0717396338904
+        y: 263.1695589435702
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(result):\n    import json\n\n    value = result\n\n    if\
+          \ isinstance(value, str):\n        value = json.loads(value)\n\n    if isinstance(value,\
+          \ dict) and isinstance(value.get(\"result\"), dict):\n        value = value[\"\
+          result\"]\n\n    if not isinstance(value, dict):\n        raise ValueError(\"\
+          final result must be an object\")\n\n    value[\"_debug_marker\"] = \"finalize_result_ok\"\
+          \n\n    return {\n        \"result_json\": json.dumps(value, ensure_ascii=False)\n\
+          \    }\n"
+        code_language: python3
+        outputs:
+          result_json:
+            children: null
+            type: string
+        selected: false
+        title: finalize_result
+        type: code
+        variables:
+        - value_selector:
+          - '1776349826718'
+          - structured_result
+          value_type: object
+          variable: result
+      height: 52
+      id: '1776417376042'
+      position:
+        x: 281.3143730863639
+        y: 406.0779837044283
+      positionAbsolute:
+        x: 281.3143730863639
+        y: 406.0779837044283
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 609.8760116677114
+      y: -175.05567442891413
+      zoom: 1.1892071034422886
+  rag_pipeline_variables: []
